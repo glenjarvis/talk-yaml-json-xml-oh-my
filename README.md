@@ -138,12 +138,102 @@ Here is the same data represented as a JSON object:
 
 ### Bringing a JSON file into Python
 
-There is a python library for JSON built in. So, `import json`. There is a
-method on this module called `loads`. So, if we have the file read and stored
-as a varible called `data` (as a large string), we can do this:
+There is a python library for JSON already built in. So, `import json` to use
+it. There is a method on this module called `loads`. So, if we have the file
+read and stored as a varible called `data` (as a large string), we can do this:
 
 ```loaded_data = json.loads(data)```
 
 See the `from_json.py` program that reads the `source.json` file, converts it
 from JSON to a Python dictionary, and prints a few uses of this data.
+
+### Converting PYTHON data to JSON
+
+You can also go the other way. If you have Python data and you want to dump it
+to a user who may consume it into any other program or service, you still use
+the `json` module. The method to dump this data into JSON is `dumps`.
+
+See the `to_json.py` example program that dumps the source data into JSON
+format on the screen. Also, note that after this is converted, it is a
+*string*. As far as any program is concerned, it's text. (Of course, the text
+needs to be parsable as specified by https://tools.ietf.org/html/std90).
+
+Also, note that this isn't formatted in a pretty way for humans. This is meant
+to be consumed by other programs. Of course, if you want to beautify it, you
+can. You may want to, for example, make an example that is more easily read by
+an audience when describing JSON. There are libraries that you can pip install
+that will do that. One example is jsbeautifier. See the "make.py" file for an
+example. This file generates the source.* files in this repo so we can keep
+things consistent.
+
+
+### Examples of usefulness
+
+Most APIs use JSON to return the data. For example, if you wanted to ask GitHub
+for all of the commits in this repository, you will get the results back in
+JSON format. Here's a command line example to:
+
+
+``` 
+curl -i "https://api.github.com/repos/glenjarvis/talk-yaml-json-xml-oh-my/commits"
+```
+
+Notice this commit `fda3470ea01a817865430dc0c75b32861139e0bd` that is returned
+(among others). It's a JSON object with the hash (`sha`), the author, commiter,
+message, and tree:
+
+```
+  {                                                                                                                                                    
+    "sha": "fda3470ea01a817865430dc0c75b32861139e0bd",                                                                                                 
+    "node_id": "MDY6Q29tbWl0MzU5OTg4NjY4OmZkYTM0NzBlYTAxYTgxNzg2NTQzMGRjMGM3NWIzMjg2MTEzOWUwYmQ=",                                                     
+    "commit": {                                                                                                                                        
+      "author": {                                                                                                                                      
+        "name": "Glen Jarvis",                                                                                                                         
+        "email": "glen@glenjarvis.com",                                                                                                                
+        "date": "2021-04-21T03:55:57Z"                                                                                                                 
+      },                                                                                                                                               
+      "committer": {                                                                                                                                   
+        "name": "Glen Jarvis",                                                                                                                         
+        "email": "glen@glenjarvis.com",                                                                                                                
+        "date": "2021-04-21T04:01:27Z"                                                                                                                 
+      },                                                                                                                                               
+      "message": "Add first portion of talk: JSON",                                                                                                    
+      "tree": {                                                                                                                                        
+        "sha": "9013886531aec018cd4964077765f0486a578da2",                                                                                             
+        "url": "https://api.github.com/repos/glenjarvis/talk-yaml-json-xml-oh-my/git/trees/9013886531aec018cd4964077765f0486a578da2"                   
+      },
+   ...
+  }
+```
+
+This is the information that is contained within the commit. If this repo were
+checked out locally, you can see where this data comes from and compare:
+
+```
+$ git cat-file -p fda3470ea01a817865430dc0c75b32861139e0bd
+tree 9013886531aec018cd4964077765f0486a578da2
+parent f11a2428d7a6539b7ed93b15b077fe995bdb4dc8
+author Glen Jarvis <glen@glenjarvis.com> 1618977357 -0700
+committer Glen Jarvis <glen@glenjarvis.com> 1618977687 -0700
+gpgsig -----BEGIN PGP SIGNATURE-----
+ 
+ iQIzBAABCAAdFiEEMB3SOJ/POM37/w4YkXbi+wR53lwFAmB/o5kACgkQkXbi+wR5
+ 3lyK4w//dGmvy9n2XevR4ZkXQ4IA1I8pJjk4khLIlXUx5x0Pz9aAWG18VaO0M7lu
+ lYa6vKAbAlwr+ebzsbPYnBlf4yxID6UAOZZTjG8qC1SkVXZW7RpL/uGl9eN81AWM
+ 12aPcRPOGP3K5ixk/neeW+6xrMMqJEQA9r1veI9Y3v2sn9ckOsBC8Oa5GRnMeNTA
+ dDcNMi9wuxI3caWBezCmcivGLZxK2OO/eMsnJPIDakA07kT/cN+J/qbynLF5AskZ
+ Qb38WZ4QrPb4hl6UORe1z8yM+8PLFMkMyOiockH6c6yAg4DOmQFARVfU/Zfx1KXh
+ 5wdlWzfCzkWcbIHWAETRgMu/Asios7Y3NvqPB5sQz8sc22LZ4JpgAI9QdpcUBpr3
+ k1iAZgN+OTHmmaTydHIdwhW07DNym2dm03BJgZozQ9TZpV83gLezDGXTKK2f2b78
+ zPKQOTlQTxCcKpqsZYS2yj+c9kPtomG30jOM2ZImdavMcl3d/ZBtEHPyp3qFM0RQ
+ ljrXEtt8wLAnzedJ8ZbDIJmL2d1Ey0UDpW84eHYxchPAwrlfhmnE1IDrqlCUTXMt
+ XTVKrroZ18VdoBqBnm+4aLfSkog8yravbCILzTAJRn/JksG+qTjM8WdndjqRpZ21
+ ag0voQ0QDV1nhHwU11QBfWwIAHQZUiViZvhAPdQ4WYmBwykFWLY=
+ =wJdn
+ -----END PGP SIGNATURE-----
+```
+
+So, by interfacing with other endpoints with JSON (using the MIME type of
+"application/json"), you can begin interacting with practically any API service
+that is available on the internet.
 
