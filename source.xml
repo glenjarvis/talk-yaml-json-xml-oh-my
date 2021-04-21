@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Person>
+  <FirstName>Glen</FirstName>
+  <Surname>Jarvis</Surname>
+  <PreferredPronouns>He, Him, His</PreferredPronouns>
+  <Email>glen@glenjarvis.com</Email>
+  <GitHub>https://github.com/glenjarvis</GitHub>
+  <LinkedIn>https://www.linkedin.com/in/glenjarvis</LinkedIn>
+  <BitcoinAddress>bc1q889z9ap6vjxtjgrgn4ldsl4kp8vn44qpksn9z3</BitcoinAddress>
+  <Address city="San Francisco" postalCode="94114" state="CA"
+           streetAddress="555 Made-up Lane"/>
+  <PhoneNumbers>
+    <PhoneNumber number="415-555-1212" type="Home"/>
+  </PhoneNumbers>
+</Person>
