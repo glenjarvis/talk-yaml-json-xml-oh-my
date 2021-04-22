@@ -12,6 +12,7 @@ repo so they are ready for beginners to review).
 import json
 
 import jsbeautifier
+from ruamel.yaml import YAML
 
 import source
 
@@ -27,4 +28,13 @@ def write_json_source():
                 json.dumps(source.CUSTOMER_DICT), opts))
 
 
+def write_yaml_source():
+    """Write ./source.yaml"""
+    yaml = YAML()
+    yaml.default_flow_style = False
+    with open("./source.yaml", "w") as yaml_f:
+        yaml.dump(source.CUSTOMER_DICT, yaml_f)
+
+
 write_json_source()
+write_yaml_source()
