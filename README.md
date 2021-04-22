@@ -58,15 +58,15 @@ We're going to structure the above data in different formats (JSON, YAML, XML,
 etc.). So, you may ask, why have different formats to represent the same thing.
 Here's an easy way to remember that:
 
-JSON: For programmers
-YAML: For people
-XML: For computers
+* JSON: For programmers / APIs
+* YAML: For people
+* XML: For computers
 
 Yes, programmers are people who program computers. But, the above is a simple
 breakdown for why one would use a particular format.
 
 Honestly, you are given the format from a data source. Whatever format that
-they gave it to you is probably the format you'll have to consume.
+they gave it to you is probably the format you'll have to consume or use.
 
 If you have to choose a format to give to another service, avoid XML if
 possible. And, when in dobut, choose JSON.
@@ -100,7 +100,7 @@ Previously, I had said that JSON was for programmers. And, you are programmers,
 so let's start there. Also, JSON is so similar to a Python dictionary that it
 is immediately familiar.
 
-JSON is an acronym for JavaScript Object Notation. It looks a *lot* like a
+JSON is an acronym for JavaScript Object Notation. It looks a **lot** like a
 Python dictionary. However, unlike a Python dictionary (as text, we aren't yet
 ready to discuss pickle), JSON has been standardized by the Internet
 Engineering Task Force as STD90 (https://tools.ietf.org/html/std90).
@@ -112,7 +112,7 @@ internet service or another program.
 
 Also note that Python dictionaries don't necessarily have to keep the same
 order of keys that they're in now (i.e., 'Address' may be the first listed
-instead of 'Firstname'). However, there is a Python equivalent of OrderedDict
+instead of 'Firstname'). However, there is a Python module called OrderedDict
 which does preserve the keys. For simplicity, we'll display this with the same
 key order as the original example. JSON does preserve the key order.
 
@@ -557,15 +557,43 @@ document types like above. Such code will usually include application level vali
 zip code and it has a specific format).
 
 
-[x] https://en.wikipedia.org/wiki/JSON
+## Summary
 
-[x] https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
+* JSON: For programmers / APIs
+* YAML: For people
+* XML: For computers
 
-[x] https://tools.ietf.org/html/std90
 
-[x] https://en.wikipedia.org/wiki/YAML
-https://snyk.io/advisor/python/ruamel-yaml
-https://snyk.io/advisor/python/pyyaml
-https://nvd.nist.gov/vuln/detail/CVE-2017-18342
+### API usage
 
-https://github.com/yaml/pyyaml/wiki/PyYAML-yaml.load(input)-Deprecation
+Choices are:
+* JSON
+* XML
+
+If you have an option to use JSON, use that. Otherwise, fall back to XML.
+
+
+### Human Input to systems such as Ansible
+
+Choices are:
+* YAML
+
+
+### Serialization
+
+Assuming efficiency is not critical, use JSON for interoperability. If
+efficiency is efficient, use a binary format and research Protocol
+Buffers/gRPC. These are more advanced topics and outside the scope of this
+talk.
+
+
+### Further Reading
+
+* https://en.wikipedia.org/wiki/JSON
+* https://en.wikipedia.org/wiki/YAML
+* https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats
+* https://tools.ietf.org/html/std90
+* https://snyk.io/advisor/python/ruamel-yaml
+* https://snyk.io/advisor/python/pyyaml
+* https://nvd.nist.gov/vuln/detail/CVE-2017-18342
+* https://github.com/yaml/pyyaml/wiki/PyYAML-yaml.load(input)-Deprecation
