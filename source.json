@@ -7,10 +7,10 @@
   "LinkedIn": "https://www.linkedin.com/in/glenjarvis",
   "Bitcoin Address": "bc1q889z9ap6vjxtjgrgn4ldsl4kp8vn44qpksn9z3",
   "Address": {
+    "Street Address": "555 Made-up Lane",
     "City": "San Francisco",
-    "Postal Code": 94114,
     "State": "CA",
-    "Street Address": "555 Made-up Lane"
+    "Postal Code": 94114
   },
   "Phone Numbers": [{
     "number": "415-555-1212",
