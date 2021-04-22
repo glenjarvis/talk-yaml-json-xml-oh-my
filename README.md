@@ -237,3 +237,142 @@ So, by interfacing with other endpoints with JSON (using the MIME type of
 "application/json"), you can begin interacting with practically any API service
 that is available on the internet.
 
+## XML Format
+XML ("eXtensible Markup Language") is a data format with syntax very similar to HTML: XML *documents*
+are composed of *elements*, which may have *attributes*, *child content*, and *child elements*. XML is a standard
+(https://www.w3.org/TR/2008/REC-xml-20081126/) from the World Wide Web consortium. Like HTML, it is
+derived from the document format SGML (Standard Generalized Markup Language). Unlike HTML, the names of elements and
+attributes are not limited to a specific set, but can be custom defined for a particular application domain.
+
+XML's origins as a document format make it a little harder than JSON and YAML to convert back and forth between
+XML data and Python objects. As you will see, the code is a bit more tedious.
+
+Here is our example customer as an XML document:
+
+```
+<?xml version="1.0"?>
+<Person>
+  <FirstName>Glen</FirstName>
+  <Surname>Jarvis</Surname>
+  <PreferredPronouns>He, Him, His</PreferredPronouns>
+  <Email>glen@glenjarvis.com</Email>
+  <GitHub>https://github.com/glenjarvis</GitHub>
+  <LinkedIn>https://www.linkedin.com/in/glenjarvis</LinkedIn>
+  <BitcoinAddress>bc1q889z9ap6vjxtjgrgn4ldsl4kp8vn44qpksn9z3</BitcoinAddress>
+  <Address city="San Francisco" postalCode="94114" state="CA"
+           streetAddress="555 Made-up Lane"/>
+  <PhoneNumbers>
+    <PhoneNumber number="415-555-1212" type="Home"/>
+  </PhoneNumbers>
+</Person>
+```
+
+A few things to note:
+
+1. There is a boilerplate xml version declaration on the first line
+2. We have a single outermost element (`Person`) for the document.
+3. Most of the properties of `Person` are child elements. Attributes
+   could have also been used for `FirstName`, `Surname`, `PreferredPronouns`,
+   `Email`, `GitHub`, `LinkedIn`, and `BitcoinAddress`.
+4. `Address` must be a child element of `Person` since it has properties as well. These
+    properties are represented here as attributes of `Address`.
+5. Since there can be more than one phone number, we enclose the list of number entries in
+   a `PhoneNumbers` attribute. Note that children of an element are ordered, but attributes are
+   unordered.
+   
+### Bringing an XML file into Python
+
+To load an XML file into Python, we need to use an XML parser. The Python standard library
+includes several (https://docs.python.org/3/library/xml.html). Here is some example code using the
+`xml.etree.ElementTree` API:
+
+```
+import xml.etree.ElementTree as ET
+
+tree = ET.parse("source.xml")
+root = tree.getroot()
+assert root.tag=='Person'
+
+# now we walk the tree and build a Python dict
+person = {}
+person['First Name'] = root.find('FirstName').text
+person['Surname'] = root.find('Surname').text
+person['Preferred Pronouns'] = root.find('PreferredPronouns').text
+person['Email'] = root.find('Email').text
+person['GitHub'] = root.find('GitHub').text
+person['LinkedIn'] = root.find('LinkedIn').text
+person['Bitcoin Address'] = root.find('BitcoinAddress').text
+address = {}
+address_el = root.find('Address')
+address['City'] = address_el.get('city')
+address['Postal Code'] = int(address_el.get('postalCode'))
+address['State'] = address_el.get('state')
+address['Street Address'] = address_el.get('streetAddress')
+person['Address'] = address
+numbers_el = root.find('PhoneNumbers')
+phone_numbers = []
+for child in numbers_el.findall('PhoneNumber'):
+    phone_numbers.append({'number':child.get('number'), 'type':child.get('type')})
+person['Phone Numbers'] = phone_numbers
+print(repr(person))
+
+```
+
+Note that we explicitly extract each field from the `ElementTree` structure.
+
+### Converting Python data to XML
+
+We will do this using the `ElementTree` API, building one element at a time.
+
+```
+import xml.etree.ElementTree as ET
+
+from source import CUSTOMER_DICT
+
+
+person = ET.Element("Person")
+fn = ET.SubElement(person, 'FirstName')
+fn.text = CUSTOMER_DICT['First Name']
+sn = ET.SubElement(person, 'Surname')
+sn.text = CUSTOMER_DICT['Surname']
+pn = ET.SubElement(person, 'PreferredPronouns')
+pn.text = CUSTOMER_DICT['Preferred Pronouns']
+em = ET.SubElement(person, "Email")
+em.text = CUSTOMER_DICT['Email']
+gh = ET.SubElement(person, "GitHub")
+gh.text = CUSTOMER_DICT['GitHub']
+li = ET.SubElement(person, 'LinkedIn')
+li.text = CUSTOMER_DICT['LinkedIn']
+bi = ET.SubElement(person, 'BitcoinAddress')
+bi.text = CUSTOMER_DICT['Bitcoin Address']
+address = CUSTOMER_DICT['Address']
+ET.SubElement(person, 'Address',
+              city=address['City'],
+              postalCode=str(address['Postal Code']),
+              state=address['State'],
+              streetAddress=address['Street Address'])
+phs = ET.SubElement(person, 'PhoneNumbers')
+for number_entry in CUSTOMER_DICT['Phone Numbers']:
+    ET.SubElement(phs, 'PhoneNumber',
+                  number=number_entry['number'],
+                  type=number_entry['type'])
+
+ET.dump(person)
+```
+
+The mappings between XML and Python are so tedious due to mismatch between XML elements/attributes
+and Python dicts/lists. An element has attributes, which are like dict properties. However, unlike Python
+dict values, the attribute values of an element can only be strings. The children of an XML element are ordered
+like a Python list, but you can intermix element and text children arbitrarily.
+
+Some specific uses of XML have a
+well-defined mapping between common language types XML. See, for example, the XML-RPC module in the standard
+library (https://docs.python.org/3/library/xmlrpc.client.html#module-xmlrpc.client).
+Statically-typed languages
+such as Java and Go provide libraries to define mappings between XML documents and statically defined classes.
+This is, in theory, possible in Python as well (e.g. https://github.com/gatkin/declxml), but that approach
+is not very popular in Python.
+
+
+
+
