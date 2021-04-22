@@ -240,7 +240,7 @@ that is available on the internet.
 ## XML Format
 XML ("eXtensible Markup Language") is a data format with syntax very similar to HTML: XML *documents*
 are composed of *elements*, which may have *attributes*, *child content*, and *child elements*. XML is a standard
-(https://www.w3.org/TR/2008/REC-xml-20081126/) from the World Wide Web consortium. Like HTML, it is
+(https://www.w3.org/TR/2008/REC-xml-20081126/) from the World Wide Web Consortium. Like HTML, it is
 derived from the document format SGML (Standard Generalized Markup Language). Unlike HTML, the names of elements and
 attributes are not limited to a specific set, but can be custom defined for a particular application domain.
 
@@ -360,7 +360,7 @@ for number_entry in CUSTOMER_DICT['Phone Numbers']:
 ET.dump(person)
 ```
 
-The mappings between XML and Python are so tedious due to mismatch between XML elements/attributes
+The mappings between XML and Python are so tedious due to the mismatch between XML elements/attributes
 and Python dicts/lists. An element has attributes, which are like dict properties. However, unlike Python
 dict values, the attribute values of an element can only be strings. The children of an XML element are ordered
 like a Python list, but you can intermix element and text children arbitrarily.
@@ -371,7 +371,9 @@ library (https://docs.python.org/3/library/xmlrpc.client.html#module-xmlrpc.clie
 Statically-typed languages
 such as Java and Go provide libraries to define mappings between XML documents and statically defined classes.
 This is, in theory, possible in Python as well (e.g. https://github.com/gatkin/declxml), but that approach
-is not very popular in Python.
+is not very popular in Python. The most common approach is to write explicit mapping code for particular
+document types like above. Such code will usually include application level validation (e.g. an address must have a
+zip code and it has a specific format).
 
 
 
