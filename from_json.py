@@ -26,7 +26,7 @@ print("Type of data: {}".format(type(loaded_data)))
 print("\n")
 print("Contents")
 print("--------")
-pprint.pprint(loaded_data)
+pprint.pprint(loaded_data, sort_dicts=False)
 
 print("\n")
 print("Now, it is data like normal")
