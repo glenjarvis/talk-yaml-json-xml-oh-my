@@ -315,6 +315,7 @@ dictionary.
 
 As a caveat, YAML has much more that *could* be there than just the above.
 For example, most JSON documents are valid YAML.
+
 Ultimately, the usefulness of YAML, especially for beginners, is to understand
 how the "outline form" that they are entering is really just a data structure
 like we see in JSON, Python dictionaries, etc.
@@ -359,7 +360,7 @@ with open("./source.yaml", "r") as source_file:
 
 Note:
 
-1. The first argument to the YAML class instantiation (`type='safe'`). **This is incredibly important**. There was a 
+1. The first argument to the YAML class instantiation (`typ='safe'`). **This is incredibly important**. There was a 
    NIST National Vulnerability Database entry against PyYAML for an exploit: https://nvd.nist.gov/vuln/detail/CVE-2017-18342.
    Other communities, such as the Ruby-on-Rails community also suffered quite a bit of pain from YAML attacks.
  
