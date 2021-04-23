@@ -367,7 +367,7 @@ Note:
        ```
        python -c 'import yaml; yaml.load("!!python/object/new:os.system [echo EXPLOIT!]")'
        ```
-   The `ruamel.yaml` package has addressed more of these concerns, per Synk Advisor:
+   The `ruamel.yaml` package has addressed more of these concerns, per Snyk Advisor:
    
     * https://snyk.io/advisor/python/pyyaml
     * https://snyk.io/advisor/python/ruamel-yaml
