@@ -69,7 +69,7 @@ Honestly, you are given the format from a data source. Whatever format that
 they gave it to you is probably the format you'll have to consume or use.
 
 If you have to choose a format to give to another service, avoid XML if
-possible. And, when in dobut, choose JSON.
+possible. And, when in doubt, choose JSON.
 
 However, we'll see plenty of examples where all of these formats are very
 popular and used frequently.
@@ -109,12 +109,6 @@ Although it is a subset of JavaScript, it maps almost perfectly to a
 dictionary. However, JSON can be consumed by many languges, not just Python --
 so it is a great format for serializing a data format for ingestion by another
 internet service or another program.
-
-Also note that Python dictionaries don't necessarily have to keep the same
-order of keys that they're in now (i.e., 'Address' may be the first listed
-instead of 'Firstname'). However, there is a Python module called OrderedDict
-which does preserve the keys. For simplicity, we'll display this with the same
-key order as the original example. JSON does preserve the key order.
 
 Here is the same data represented as a JSON object:
 
@@ -319,23 +313,8 @@ Translates to:
 So, look for the dashes and think "list". And, without the dashes, think
 dictionary.
 
-As a caveat, YAML has much more that *could* be there than just the above.  For
-example, you may see something like:
-
-```
-    Address: !!omap
-      - City: San Francisco
-      - Postal Code: 94114
-      - State: CA
-      - Street Address: 555 Made-up Lane
-```
-
-Although this has a list of items (the dashes), it also has `||omap` which
-says, this is really a dictionary, but it is ORDERED (like the order of a
-list). This is the equivalent of an OrderedDict in python -- when we want a
-dictionary, but we want to preserve the order of the keys in the dictionary.
-
-
+As a caveat, YAML has much more that *could* be there than just the above.
+For example, most JSON documents are valid YAML.
 Ultimately, the usefulness of YAML, especially for beginners, is to understand
 how the "outline form" that they are entering is really just a data structure
 like we see in JSON, Python dictionaries, etc.
@@ -547,7 +526,7 @@ dict values, the attribute values of an element can only be strings. The childre
 like a Python list, but you can intermix element and text children arbitrarily.
 
 Some specific uses of XML have a
-well-defined mapping between common language types XML. See, for example, the XML-RPC module in the standard
+well-defined mapping between common language types and XML. See, for example, the XML-RPC module in the standard
 library (https://docs.python.org/3/library/xmlrpc.client.html#module-xmlrpc.client).
 Statically-typed languages
 such as Java and Go provide libraries to define mappings between XML documents and statically defined classes.
