@@ -31,21 +31,21 @@ system:
 
 
 ```
-  - First Name: Glen
-  - Surname: Jarvis
-  - Preferred Pronouns: He, Him, His
-  - Email: glen@glenjarvis.com
-  - GitHub: https://github.com/glenjarvis
-  - LinkedIn: https://www.linkedin.com/in/glenjarvis
-  - Bitcoin Address: bc1q889z9ap6vjxtjgrgn4ldsl4kp8vn44qpksn9z3
-  - Address:
-      Street Address: 555 Made-up Lane
-      City: San Francisco
-      State: CA
-      Postal Code: 94114
-  - Phone Numbers:
-    - number: 415-555-1212
-      type: Home
+First Name: Glen
+Surname: Jarvis
+Preferred Pronouns: He, Him, His
+Email: glen@glenjarvis.com
+GitHub: https://github.com/glenjarvis
+LinkedIn: https://www.linkedin.com/in/glenjarvis
+Bitcoin Address: bc1q889z9ap6vjxtjgrgn4ldsl4kp8vn44qpksn9z3
+Address:
+  Street Address: 555 Made-up Lane
+  City: San Francisco
+  State: CA
+  Postal Code: 94114
+Phone Numbers:
+- number: 415-555-1212
+  type: Home
 ```
 
 We will represent this data in different formats and see how it's used with
